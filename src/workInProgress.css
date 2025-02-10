@@ -1,0 +1,76 @@
+body {
+    background: white;
+    width: 100%;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    margin: 25px;
+}
+
+.dice { 
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+    font-weight: 250;
+    justify-content: center;
+    align-items: center;
+}
+
+.Fsides {
+    width: 0;
+    height: 0;
+    border: 50px solid transparent;
+    border-top: 0;
+    border-bottom: 100px solid red;
+    margin: 25px;
+}
+
+.Ssides {
+    border: 50px solid blue;
+    margin: 25px;
+}
+
+.Esides {
+    width: 0;
+    height: 0;
+    border: 50px solid transparent;
+    border-top: 0;
+    border-bottom: 100px solid green;
+    margin: 25px;
+}
+
+.Tesides {   
+    width: 100px;
+    height: 55px;
+    background: yellow;
+    position: relative;
+}
+
+.Tesides:before{   
+    content: "";
+    position: absolute;
+    top: -25px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 25px solid yellow;
+}
+
+.Tesides:after{   
+    content: "";
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 25px solid yellow;
+}

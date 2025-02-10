@@ -1,0 +1,18 @@
+.wall {
+    width: 25rem;
+	height: 35rem;
+	background: #555;
+    border-radius: 10px;
+    border-width: 2px;
+    border: black;
+}
+
+.room {
+    justify-content: center;
+    display: flex;
+    margin-top: 20rem;
+}
+
+.left {
+    transform: perspective(100px) rotate(-5deg);
+}

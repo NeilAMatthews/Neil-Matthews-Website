@@ -1,0 +1,139 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DnD Dice Roller</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+  <style>
+    body { user-select: none; }
+    .text-shadow { text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); }
+    .perspective { perspective: 1000px; }
+    .hover-glow:hover { box-shadow: 0 0 10px 2px rgba(0, 100, 255, 0.7); }
+    .logo-text { 
+      font-family: 'MedievalSharp', cursive; 
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5), -1px -1px 3px rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-8">
+  <div class="max-w-4xl mx-auto bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl shadow-2xl p-8 border border-gray-700">
+    <h1 class="text-4xl font-bold text-center text-blue-300 mb-8 logo-text">Roll Bicth!</h1>
+    <div id="dice-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"></div>
+    <button id="roll-all-dice" class="mt-8 w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-4 rounded-xl text-xl font-semibold shadow-[5px_5px_10px_rgba(0,0,0,0.3),-5px_-5px_10px_rgba(255,255,255,0.05)] hover:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.3),inset_-2px_-2px_5px_rgba(255,255,255,0.05)] active:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.3),inset_-2px_-2px_5px_rgba(255,255,255,0.05)] transition-all duration-200 ease-in-out">Roll All Dice</button>
+  </div>
+
+  <script>
+    const diceTypes = [
+      { value: 2, label: 'D2' },
+      { value: 3, label: 'D3' },
+      { value: 4, label: 'D4' },
+      { value: 6, label: 'D6' },
+      { value: 8, label: 'D8' },
+      { value: 10, label: 'D10' },
+      { value: 12, label: 'D12' },
+      { value: 20, label: 'D20' },
+      { value: 100, label: 'D100' },
+    ];
+
+    let dice = diceTypes.map(type => ({ ...type, result: null }));
+
+    const diceContainer = document.getElementById('dice-container');
+
+    function rollDice(index) {
+      dice[index].result = Math.floor(Math.random() * dice[index].value) + 1;
+      renderDice();
+    }
+
+    function rollAllDice() {
+      dice = dice.map(die => ({
+        ...die,
+        result: Math.floor(Math.random() * die.value) + 1
+      }));
+      renderDice();
+    }
+
+    function changeDiceType(index, newType) {
+      dice[index] = { ...diceTypes.find(t => t.value === parseInt(newType)), result: null };
+      renderDice();
+    }
+
+    function addDie() {
+      dice.push({ ...diceTypes[0], result: null });
+      renderDice();
+    }
+
+    function removeDie(index) {
+      dice.splice(index, 1);
+      renderDice();
+    }
+
+    function renderDice() {
+      diceContainer.innerHTML = '';
+      dice.forEach((die, index) => {
+        const dieElement = document.createElement('div');
+        dieElement.className = 'relative perspective';
+
+        const button = document.createElement('button');
+        button.className = 'w-full flex flex-col items-center justify-center p-6 rounded-xl bg-gradient-to-br from-gray-700 to-gray-600 shadow-[5px_5px_10px_rgba(0,0,0,0.3),-5px_-5px_10px_rgba(255,255,255,0.05)] hover:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.3),inset_-2px_-2px_5px_rgba(255,255,255,0.05)] active:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.3),inset_-2px_-2px_5px_rgba(255,255,255,0.05)] transition-all duration-200 ease-in-out hover-glow';
+        button.onclick = () => rollDice(index);
+        
+        const spanLabel = document.createElement('span');
+        spanLabel.className = 'text-lg font-semibold mt-2 text-blue-200';
+        spanLabel.textContent = die.label;
+
+        const spanResult = document.createElement('span');
+        spanResult.className = 'text-3xl font-bold mt-1 text-blue-100';
+        spanResult.textContent = die.result || '-';
+
+        button.appendChild(spanLabel);
+        button.appendChild(spanResult);
+
+        const select = document.createElement('select');
+        select.className = 'absolute top-2 left-2 text-xs bg-gray-600 text-blue-200 rounded-md border-none shadow-[inset_1px_1px_2px_rgba(0,0,0,0.3),inset_-1px_-1px_2px_rgba(255,255,255,0.1)]';
+        select.onchange = (e) => changeDiceType(index, e.target.value);
+        diceTypes.forEach(type => {
+          const option = document.createElement('option');
+          option.value = type.value;
+          option.textContent = type.label;
+          if (type.value === die.value) {
+            option.selected = true;
+          }
+          select.appendChild(option);
+        });
+
+        const removeButton = document.createElement('button');
+        removeButton.className = 'absolute top-2 right-2 text-red-400 hover:text-red-300 text-shadow';
+        removeButton.textContent = '×';
+        removeButton.onclick = () => removeDie(index);
+
+        dieElement.appendChild(button);
+        dieElement.appendChild(select);
+        dieElement.appendChild(removeButton);
+
+        diceContainer.appendChild(dieElement);
+      });
+
+      const addDieButton = document.createElement('button');
+      addDieButton.className = 'flex flex-col items-center justify-center p-6 rounded-xl bg-gradient-to-br from-gray-700 to-gray-600 shadow-[5px_5px_10px_rgba(0,0,0,0.3),-5px_-5px_10px_rgba(255,255,255,0.05)] hover:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.3),inset_-2px_-2px_5px_rgba(255,255,255,0.05)] active:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.3),inset_-2px_-2px_5px_rgba(255,255,255,0.05)] transition-all duration-200 ease-in-out hover-glow';
+      addDieButton.onclick = addDie;
+
+      const addDieSpan = document.createElement('span');
+      addDieSpan.className = 'text-4xl font-bold text-green-400';
+      addDieSpan.textContent = '+';
+      addDieButton.appendChild(addDieSpan);
+
+      const addDieText = document.createElement('span');
+      addDieText.className = 'text-sm mt-2 text-blue-200';
+      addDieText.textContent = 'Add Die';
+      addDieButton.appendChild(addDieText);
+
+      diceContainer.appendChild(addDieButton);
+    }
+
+    document.getElementById('roll-all-dice').onclick = rollAllDice;
+
+    renderDice();
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Planet!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="portal.css"/>
+        <script src="portal.js" defer></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="main-content">
+                <div class="alignButton">
+                    <button id="generatePortalButton">Generate Planet</button>
+                    <button id="generateNewNPC">New NPC</button>
+                    <button id="generateNewLoot">New Loot</button>
+                </div>
+                <div class="portal" id="portal"></div>
+            </div>
+    
+            <div class="sidebar">
+                <h3>Planet Info</h3>
+                <p><strong>Random Planet Radius:</strong> <span id="planetRadius">-</span> km</p>
+                <p><strong>Random Population:</strong> <span id="planetPopulation">-</span></p>
+                <p><strong>Random Sector:</strong> <span id="planetSector">-</span></p>
+                <p><strong>Random Coordinates:</strong> <br><span id="planetCoordinates">-</span></p>
+                <p><strong>World Type:</strong> <span id="worldType">-</span></p>
+                <p><strong>Danger Rating:</strong> <span id="dangerRating">-</span></p>
+            </div>
+            <div class="sidebar lower">
+                <h3>Loot</h3>
+                <p><strong>Type of Weapon:</strong><br> <span id="weaponType"> - </span></p>
+                <p><strong>Bonus to Weapon:</strong> <span id="weaponBonus"> - </span></p>
+                <p><strong>Amount of Money: $</strong> <span id="moneyAmount"> - </span></p>
+                <p><strong>Ship Parts:</strong> <span id="shipParts"> - </span></p>
+                <p><strong>Ship Upgrade:</strong> <span id="shipUpgrades"> - </span></p>
+                <p><strong>Dimension Upgrade:</strong><br> <span id="dimensionUpgrades"> - </span></p>
+            </div>
+            <div class="sidebar leftside">
+                <h3>Backstory</h3>
+                <p><strong>This planet is known for</strong> <span id="planetEnviorment"> - </span>.</p>
+                <p><strong>It </strong><span id="planetDiscovery"> - </span>.</p>
+                <p><strong>The inhabitants are </strong> <span id="planetInhabitant"> - </span>.</p>
+                <p><strong>Recently, </strong><span id="planetEvent"> - </span>.</p>
+            </div>
+            <div class="sidebar leftside lower1">
+                <h3>NPC</h3>
+                <p><strong>Name: </strong><span id="npcName"> - </span></p>
+                <p><strong>Aligment: </strong><span id="npcAligment"> - </span> </p>
+                <p><strong>Job: </strong><span id="npcJob"> - </span> </p>
+                <p><strong>Stats:</strong></p>
+                <p><strong>&emsp; Strength:</strong><span id="npcStr"> - </span> </p>
+                <p><strong>&emsp; Dexterity:</strong> <span id="npcDex"> - </span></p>
+                <p><strong>&emsp; Constutition:</strong><span id="npcCon"> - </span> </p>
+                <p><strong>&emsp; Wisdom:</strong><span id="npcWis"> - </span> </p>
+                <p><strong>&emsp; Inteligence:</strong><span id="npcInt"> - </span> </p>
+                <p><strong>&emsp; Charisma:</strong><span id="npcCha"> - </span> </p>
+            </div>
+        </div>
+    </body>
+</html>
